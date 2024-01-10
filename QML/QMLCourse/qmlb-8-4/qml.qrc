@@ -1,0 +1,11 @@
+<RCC>
+    <qresource prefix="/">
+        <file>main.qml</file>
+    </qresource>
+    <qresource prefix="/images">
+        <file>bulbasaur.png</file>
+        <file>charmander.jpg</file>
+        <file>pokeball.png</file>
+        <file>squirtle.png</file>
+    </qresource>
+</RCC>

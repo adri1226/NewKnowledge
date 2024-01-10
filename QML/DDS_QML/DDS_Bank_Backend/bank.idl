@@ -1,0 +1,57 @@
+//TODO: Añadir explicacion
+
+const string TRANSACTION_TOPIC = "Transaction";
+const string OPERATION_TOPIC = "Operation";
+const string HISTORY_TOPIC = "History";
+const string TOTAL_AMOUNT_FUND = "TotalAmountFund";
+
+const uint32 MAX_STRING_LEN = 512;
+
+//Operations availables
+enum OperationType{
+    DEPOSIT, 
+    WITHDRAW
+};
+
+//Funds types availables
+enum FundType 
+{
+    SAVINGS, 
+    HOUSING,
+    FOOD, 
+    TRANSPORT,
+    ENTRETAIMENT,
+    TRAVEL, 
+    CLOTHING,
+    DEBTS
+};
+
+//Topic 
+struct Transaction {
+    @key
+    FundType origin_fund;
+    FundType destination_fund;
+    int16 amount;
+};
+
+//Topic
+struct Operation {
+    @key
+    FundType fund_type;
+    OperationType operation_type;
+    int16 amount;
+}
+
+//Topic
+struct History {
+    @key
+    FundType fund_type;
+    string<MAX_STRING_LEN> history;
+}
+
+//Topic 
+struct TotalAmountFund {
+    @key
+    FundKind fund_type;
+    int16 total_amount;
+};
