@@ -1,6 +1,6 @@
 cmake_minimum_required(VERSION 3.0.0)
 
-project(PruebaDocker VERSION 0.1.0 LANGUAGES C CXX)
+project(StudingGtk VERSION 0.1.0 LANGUAGES C CXX)
 
 # Buscar la librería GTKMM
 find_package(PkgConfig REQUIRED)
