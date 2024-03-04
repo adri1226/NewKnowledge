@@ -102,3 +102,13 @@ CMakeLists.txt.user*
 *_qmlcache.qrc
 
 # End of https://www.toptal.com/developers/gitignore/api/qt,qml,c++,cmake
+
+Gtk/.devcontainer/
+
+Gtk/.vscode/
+
+Gtk/build/
+
+Gtk/.github/
+
+Gtk/Dockerfile
