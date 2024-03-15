@@ -6,10 +6,12 @@
 
 #include <gtk/gtk.h>
 
-#include "iLabel.hpp"
+#include "../design/iLabel.hpp"
+#include "aWidget.hpp"
 
 class Label :
-  public iLabel
+  public iLabel,
+  public aWidget
 {
   public:
     Label(std::string text);
@@ -17,9 +19,7 @@ class Label :
     void show() override;
     void setText(std::string text) override;
 
-  private: 
-    std::shared_ptr<GtkWidget> mWidget;
-    std::shared_ptr<GtkContainer> mContainer;
+  private:
     std::shared_ptr<GtkLabel> mLabel;
 };
 

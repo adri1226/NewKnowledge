@@ -4,10 +4,10 @@
 #include <iostream>
 #include <memory>
 
-#include "iGraphicElement.hpp"
+#include "iWidget.hpp"
 
 class iLabel :
-  public iGraphicElement
+  public iWidget
 {
   public:
     iLabel() = default;

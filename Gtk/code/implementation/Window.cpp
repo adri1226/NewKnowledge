@@ -21,16 +21,6 @@ void Window::show()
   gtk_widget_show_all(mWidget.get());
 }
 
-void Window::addChild(std::shared_ptr<iGraphicElement> child)
-{
-  // gtk_container_add(mContainer.get(), child.get());
-}
-
-void Window::addChild(std::shared_ptr<GtkWidget> child)
-{
-  gtk_container_add(mContainer.get(), child.get());
-}
-
 void Window::setSize(int width, int height)
 {
   gtk_widget_set_size_request(mWidget.get(), width, height);

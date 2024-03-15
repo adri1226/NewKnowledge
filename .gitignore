@@ -112,3 +112,15 @@ Gtk/build/
 Gtk/.github/
 
 Gtk/Dockerfile
+
+*.bkp
+
+Cairo\+Gtkmm4/.devcontainer/
+
+Cairo\+Gtkmm4/.vscode/
+
+Cairo\+Gtkmm4/3rdparty/
+
+Cairo\+Gtkmm4/build/
+
+Cairo\+Gtkmm4/Dockerfile
