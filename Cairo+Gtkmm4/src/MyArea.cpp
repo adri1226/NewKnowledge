@@ -4,8 +4,8 @@ MyArea::MyArea() :
   mText("TEXTO INICIAL")
 {
   set_draw_func(sigc::mem_fun(*this, &MyArea::onDraw));
-  set_content_width(200);
-  set_content_height(200);
+  set_content_width(1280);
+  set_content_height(720);
 }
 
 MyArea::~MyArea()
@@ -20,6 +20,8 @@ void MyArea::changeText(Glib::ustring text)
 
 void MyArea::onDraw(const Cairo::RefPtr<Cairo::Context>& context, int width, int height)
 {
+  std::cout << "MyArea tamaño: " << width << ", " << height << std::endl;
+  
   context->set_line_width(5);
   context->set_source_rgb(0.5, 0.1, 0.9);
 
@@ -45,8 +47,8 @@ void MyArea::onDraw(const Cairo::RefPtr<Cairo::Context>& context, int width, int
   drawRectangle(context, 200, 700, 200, 200, 20, 45);
 
   context->set_source_rgb(0.1, 0.23, 0.1);
-  drawRectangleCentered(context, 200, 700, 200, 200, 40);
-  drawRectangleCentered(context, 200, 700, 200, 200, 40, 45);
+  drawRectangleCentered(context, 200, 700, 200, 200, 0);
+  drawRectangleCentered(context, 200, 700, 200, 200, 0, 45);
 }
 
 void MyArea::drawText(const Cairo::RefPtr<Cairo::Context> &context, Glib::ustring text, int xPosition,
@@ -127,26 +129,27 @@ void MyArea::drawSimpleRectangle(const Cairo::RefPtr<Cairo::Context> &context, i
   double xCenter = x + width / 2.0;
   double yCenter = y + height / 2.0;
 
-  int xInitialPoint = - width / 2;
-  int yInitialPoint = height / 2;
-  int xSecondPoint = width / 2;
-  int ySecondPoint = height / 2;
-  int xThirdPoint = width / 2;
-  int yThirdPoint = - height / 2;
-  int xFourthPoint = - width / 2;
-  int yFourthPoint = - height / 2;
+  std::vector<Point> points
+  {
+    {- width / 2.0, height / 2.0},
+    {width / 2.0, height / 2.0},
+    {width / 2.0, - height / 2.0},
+    {- width / 2.0, - height / 2.0}
+  };
 
   context->save();
+
   context->translate(xCenter, yCenter);
   context->rotate(rotationAngleRadians);
-  context->move_to(xInitialPoint, yInitialPoint);
-  context->line_to(xSecondPoint, ySecondPoint);
-  context->line_to(xThirdPoint, yThirdPoint);
-  context->line_to(xFourthPoint, yFourthPoint);
+
+  context->move_to(points[0].x, points[0].y);
+  context->line_to(points[1].x, points[1].y);
+  context->line_to(points[2].x, points[2].y);
+  context->line_to(points[3].x, points[3].y);
   context->close_path();
   context->stroke();
-  context->restore();
 
+  context->restore();
 }
 
 void MyArea::drawRoundedRectangle(const Cairo::RefPtr<Cairo::Context> &context, int x, int y, int width, 
@@ -182,22 +185,19 @@ void MyArea::drawRoundedRectangle(const Cairo::RefPtr<Cairo::Context> &context, 
   };
 
   context->save();
+
   context->translate(xCenter, yCenter);
   context->rotate(rotationAngleRadians);
 
   context->move_to(points[0].x, points[0].y);
-  context->line_to(width / 2 - roundedSize, height / 2);
-
-  context->curve_to(width / 2 - roundedSize, height / 2, width / 2, height / 2, width / 2, height / 2 - roundedSize);
-  context->line_to(width / 2, -height / 2 + roundedSize);
-
-  context->curve_to(width / 2, -height / 2 + roundedSize, width / 2, -height / 2, width / 2 - roundedSize, -height / 2);
-  context->line_to(-width / 2 + roundedSize, -height / 2);
-
-  context->curve_to(-width / 2 + roundedSize, - height / 2, -width / 2, - height / 2, -width / 2, - height / 2 + roundedSize);
-  context->line_to(-width / 2, height / 2 - roundedSize);
-
-  context->curve_to(-width / 2, height / 2 - roundedSize, -width / 2, height / 2, -width / 2 + roundedSize, height / 2);
+  context->line_to(points[1].x, points[1].y);
+  context->curve_to(points[1].x, points[1].y, controlPoints[0].x, controlPoints[0].y, points[2].x, points[2].y);
+  context->line_to(points[3].x, points[3].y);
+  context->curve_to(points[3].x, points[3].y, controlPoints[1].x, controlPoints[1].y, points[4].x, points[4].y);
+  context->line_to(points[5].x, points[5].y);
+  context->curve_to(points[5].x, points[5].y, controlPoints[2].x, controlPoints[2].y, points[6].x, points[6].y);
+  context->line_to(points[7].x, points[7].y);
+  context->curve_to(points[7].x, points[7].y, controlPoints[3].x, controlPoints[3].y, points[0].x, points[0].y);
   context->stroke();
 
   context->restore();

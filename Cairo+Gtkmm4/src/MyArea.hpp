@@ -1,11 +1,14 @@
-#ifndef GTKMM_EXAMPLE_MYAREA_H
-#define GTKMM_EXAMPLE_MYAREA_H
+#ifndef MYAREA_HPP
+#define MYAREA_HPP
+
+#include <iostream>
 
 #include <gtkmm.h>
 #include <gdkmm.h>
 #include <cairomm/context.h>
 
-class MyArea : public Gtk::DrawingArea
+class MyArea : 
+  public Gtk::DrawingArea
 {
   private:
     struct Point 
@@ -31,15 +34,16 @@ class MyArea : public Gtk::DrawingArea
     void onDraw(const Cairo::RefPtr<Cairo::Context> &cr, int width, int height);
 
   private:
-    void drawText(const Cairo::RefPtr<Cairo::Context> &context, Glib::ustring text, int xPosition, int yPosition);
+    void drawText(const Cairo::RefPtr<Cairo::Context> &context, Glib::ustring text, int xPosition, 
+                  int yPosition);
     void drawTextCentered(const Cairo::RefPtr<Cairo::Context> &context, Glib::ustring text,
                           int xPosition, int yPosition);
-    void drawSimpleRectangle(const Cairo::RefPtr<Cairo::Context> &context, int x, int y, int width, int height,
-                             double rotationAngleDegrees = 0);
+    void drawSimpleRectangle(const Cairo::RefPtr<Cairo::Context> &context, int x, int y, int width, 
+                             int height, double rotationAngleDegrees = 0);
     void drawRoundedRectangle(const Cairo::RefPtr<Cairo::Context> &context, int x, int y, int width, 
                               int height, int roundedSize, double rotationAngleDegrees = 0);
 
     Glib::ustring mText;
 };
 
-#endif // GTKMM_EXAMPLE_MYAREA_H
+#endif // MYAREA_HPP
