@@ -1,32 +1,41 @@
 #include "MyImage.hpp"
 
-MyImage::MyImage(Glib::ustring pathToImage) :
+MyImage::MyImage(Glib::ustring pathToImage, int width, int height) :
   mImagePath(pathToImage)
 {
+  set_content_width(width);
+  set_content_height(height);
+
+  changeImage(mImagePath);
+
+  set_draw_func(sigc::mem_fun(*this, &MyImage::onDraw));
+}
+
+bool MyImage::changeImage(Glib::ustring newImagePath)
+{
+  Glib::RefPtr<Gdk::Pixbuf> newImage;
   try
   {
-    mImage = Gdk::Pixbuf::create_from_file(mImagePath);
+    newImage = Gdk::Pixbuf::create_from_file(newImagePath);
   }
   catch(const Gio::ResourceError& ex)
   {
     std::cerr << "ResourceError: " << ex.what() << std::endl;
+    return false;
   }
   catch(const Gdk::PixbufError& ex)
   {
     std::cerr << "PixbufError: " << ex.what() << std::endl;
+    return false;
   }
 
-  set_content_width(1280);
-  set_content_height(720);
+  mImage = newImage;
 
-  std::cout << "MyImage tamaño: " << get_width() << ", " << get_height() << std::endl;
+  scaleImage(get_content_width(), get_content_height());
 
-  if(mImage)
-  {
-    mImage = mImage->scale_simple(1280, 720, Gdk::InterpType::NEAREST);
-  }
+  queue_draw();
 
-  set_draw_func(sigc::mem_fun(*this, &MyImage::onDraw));
+  return true;
 }
 
 void MyImage::onDraw(const Cairo::RefPtr<Cairo::Context> &context, int width, int height)
@@ -41,4 +50,12 @@ void MyImage::onDraw(const Cairo::RefPtr<Cairo::Context> &context, int width, in
 
   Gdk::Cairo::set_source_pixbuf(context, mImage, pixbufWidth, pixbufHeigth);
   context->paint();
+}
+
+void MyImage::scaleImage(int width, int heigth)
+{
+  if(mImage)
+  {
+    mImage = mImage->scale_simple(width, heigth, Gdk::InterpType::TILES);
+  }
 }

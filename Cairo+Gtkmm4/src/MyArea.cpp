@@ -1,11 +1,12 @@
 #include "MyArea.hpp"
 
-MyArea::MyArea() :
+MyArea::MyArea(int width, int heigth) :
   mText("TEXTO INICIAL")
 {
+  set_content_width(width);
+  set_content_height(heigth);
+
   set_draw_func(sigc::mem_fun(*this, &MyArea::onDraw));
-  set_content_width(1280);
-  set_content_height(720);
 }
 
 MyArea::~MyArea()
@@ -20,8 +21,6 @@ void MyArea::changeText(Glib::ustring text)
 
 void MyArea::onDraw(const Cairo::RefPtr<Cairo::Context>& context, int width, int height)
 {
-  std::cout << "MyArea tamaño: " << width << ", " << height << std::endl;
-  
   context->set_line_width(5);
   context->set_source_rgb(0.5, 0.1, 0.9);
 
@@ -37,16 +36,13 @@ void MyArea::onDraw(const Cairo::RefPtr<Cairo::Context>& context, int width, int
   drawEllipse(context, 400, 200, 100, 200, 45);
   
   drawEllipse(context, 500, 500, 5, 5);
-  // context->set_source_rgb(0.1, 0.9, 0.5);
-  // drawRectangle(context, 500, 500, 200, 100, 25);
-  // drawRectangleCentered(context, 500, 500, 200, 100, 25);
 
   drawEllipse(context, 200, 700, 5, 5);
-  context->set_source_rgb(0.3, 0.6, 0.1);
+  context->set_source_rgb(0.8, 0.6, 0.1);
   drawRectangle(context, 200, 700, 200, 200, 20);
   drawRectangle(context, 200, 700, 200, 200, 20, 45);
 
-  context->set_source_rgb(0.1, 0.23, 0.1);
+  context->set_source_rgb(0.4, 0.23, 0.1);
   drawRectangleCentered(context, 200, 700, 200, 200, 0);
   drawRectangleCentered(context, 200, 700, 200, 200, 0, 45);
 }
@@ -191,13 +187,17 @@ void MyArea::drawRoundedRectangle(const Cairo::RefPtr<Cairo::Context> &context, 
 
   context->move_to(points[0].x, points[0].y);
   context->line_to(points[1].x, points[1].y);
-  context->curve_to(points[1].x, points[1].y, controlPoints[0].x, controlPoints[0].y, points[2].x, points[2].y);
+  context->curve_to(points[1].x, points[1].y, controlPoints[0].x, controlPoints[0].y, 
+                    points[2].x, points[2].y);
   context->line_to(points[3].x, points[3].y);
-  context->curve_to(points[3].x, points[3].y, controlPoints[1].x, controlPoints[1].y, points[4].x, points[4].y);
+  context->curve_to(points[3].x, points[3].y, controlPoints[1].x, controlPoints[1].y, 
+                    points[4].x, points[4].y);
   context->line_to(points[5].x, points[5].y);
-  context->curve_to(points[5].x, points[5].y, controlPoints[2].x, controlPoints[2].y, points[6].x, points[6].y);
+  context->curve_to(points[5].x, points[5].y, controlPoints[2].x, controlPoints[2].y, 
+                    points[6].x, points[6].y);
   context->line_to(points[7].x, points[7].y);
-  context->curve_to(points[7].x, points[7].y, controlPoints[3].x, controlPoints[3].y, points[0].x, points[0].y);
+  context->curve_to(points[7].x, points[7].y, controlPoints[3].x, controlPoints[3].y, 
+                    points[0].x, points[0].y);
   context->stroke();
 
   context->restore();
@@ -225,5 +225,4 @@ void MyArea::drawEllipse(const Cairo::RefPtr<Cairo::Context> &context, int xCent
 
   context->set_matrix(matrix);
   context->stroke();
-
 }

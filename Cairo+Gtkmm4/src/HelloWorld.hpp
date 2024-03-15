@@ -7,7 +7,6 @@
 
 class HelloWorld : public Gtk::Window
 {
-
 public:
     HelloWorld();
     ~HelloWorld() override;

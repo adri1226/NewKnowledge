@@ -18,7 +18,7 @@ class MyArea :
     };
 
   public:
-    MyArea();
+    MyArea(int width, int heigth);
     virtual ~MyArea();
 
     void changeText(Glib::ustring text);
