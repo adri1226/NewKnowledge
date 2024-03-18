@@ -27,7 +27,9 @@ class MyArea :
                        int roundedSize = 0, double rotationAngleDegrees = 0);
     void drawRectangleCentered(const Cairo::RefPtr<Cairo::Context> &context, int xCenter, int yCenter, 
                                int width, int height, int roundedSize = 0, double rotationAngleDegrees = 0);
-    void drawEllipse(const Cairo::RefPtr<Cairo::Context> &context, int xCenter, int yCenter, int width, 
+    void drawEllipse(const Cairo::RefPtr<Cairo::Context> &context, int x, int y, int width, int heigth, 
+                     double rotationAngleDegrees = 0);
+    void drawEllipseCentered(const Cairo::RefPtr<Cairo::Context> &context, int xCenter, int yCenter, int width, 
                       int heigth, double rotationAngleDegrees = 0);
 
   protected:

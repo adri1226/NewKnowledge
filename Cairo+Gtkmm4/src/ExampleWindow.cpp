@@ -3,8 +3,8 @@
 ExampleWindow::ExampleWindow() :
   mArea(kWindowWidth, kWindowHeigth),
   mImage("images/image.jpg", kWindowWidth, kWindowHeigth),
-  mCheckButton("Cambiar Imagen"),
-  mTest(kWindowWidth, kWindowHeigth)
+  mCheckButton("Cambiar Imagen")
+  // mTest(kWindowWidth, kWindowHeigth)
 {
   set_title("Mi propia ventana");
   set_default_size(kWindowWidth, kWindowHeigth);
@@ -14,10 +14,10 @@ ExampleWindow::ExampleWindow() :
   
   set_child(mFixed);
 
-  // mFixed.put(mImage, 0, 0);
-  // mFixed.put(mArea, 0, 0);
-  // mFixed.put(mCheckButton, 10, 10);
-  mFixed.put(mTest, 0, 0);
+  mFixed.put(mImage, 0, 0);
+  mFixed.put(mArea, 0, 0);
+  mFixed.put(mCheckButton, 10, 10);
+  // mFixed.put(mTest, 0, 0);
   
 
   mCheckButton.signal_toggled().connect(sigc::mem_fun(*this, &ExampleWindow::onClickButton));

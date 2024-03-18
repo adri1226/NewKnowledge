@@ -21,5 +21,5 @@ class ExampleWindow :
     MyArea mArea;
     MyImage mImage;
     Gtk::CheckButton mCheckButton;
-    MyAreaTest mTest;
+    // MyAreaTest mTest;
 };

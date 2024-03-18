@@ -24,27 +24,34 @@ void MyArea::onDraw(const Cairo::RefPtr<Cairo::Context>& context, int width, int
   context->set_line_width(5);
   context->set_source_rgb(0.5, 0.1, 0.9);
 
-  drawEllipse(context, 400, 200, 10, 10);
-  drawEllipse(context, 400, 200, 10, 100);
-  drawEllipse(context, 400, 200, 10, 100, 45);
-  drawEllipse(context, 400, 200, 100, 10);
-  drawEllipse(context, 400, 200, 100, 10, 45);
-  drawEllipse(context, 400, 200, 100, 100);
-  drawEllipse(context, 400, 200, 200, 100);
-  drawEllipse(context, 400, 200, 200, 100, 45);
-  drawEllipse(context, 400, 200, 100, 200);
-  drawEllipse(context, 400, 200, 100, 200, 45);
-  
-  drawEllipse(context, 500, 500, 5, 5);
+  drawEllipseCentered(context, 400, 200, 10, 10);
 
-  drawEllipse(context, 200, 700, 5, 5);
+  drawEllipseCentered(context, 400, 200, 100, 100);
+
+  context->set_line_width(2);
+  context->set_source_rgb(0.5, 0.5, 0.5);
+  drawEllipseCentered(context, 100, 100, 10, 10);
+  context->set_line_width(5);
+  drawEllipse(context, 100, 100, 100, 100);
+  // drawEllipseCentered(context, 400, 200, 10, 100, 45);
+  // drawEllipseCentered(context, 400, 200, 100, 10);
+  // drawEllipseCentered(context, 400, 200, 100, 10, 45);
+  // drawEllipseCentered(context, 400, 200, 100, 100);
+  // drawEllipseCentered(context, 400, 200, 200, 100);
+  // drawEllipseCentered(context, 400, 200, 200, 100, 45);
+  // drawEllipseCentered(context, 400, 200, 100, 200);
+  // drawEllipseCentered(context, 400, 200, 100, 200, 45);
+  
+  drawEllipseCentered(context, 500, 500, 5, 5);
+
+  drawEllipseCentered(context, 200, 550, 5, 5);
   context->set_source_rgb(0.8, 0.6, 0.1);
-  drawRectangle(context, 200, 700, 200, 200, 20);
-  drawRectangle(context, 200, 700, 200, 200, 20, 45);
+  drawRectangle(context, 200, 550, 200, 200, 20);
+  drawRectangle(context, 200, 550, 200, 200, 20, 45);
 
   context->set_source_rgb(0.4, 0.23, 0.1);
-  drawRectangleCentered(context, 200, 700, 200, 200, 0);
-  drawRectangleCentered(context, 200, 700, 200, 200, 0, 45);
+  drawRectangleCentered(context, 200, 550, 200, 200, 0);
+  drawRectangleCentered(context, 200, 550, 200, 200, 0, 45);
 }
 
 void MyArea::drawText(const Cairo::RefPtr<Cairo::Context> &context, Glib::ustring text, int xPosition,
@@ -116,6 +123,30 @@ void MyArea::drawRectangleCentered(const Cairo::RefPtr<Cairo::Context> &context,
   {
     drawRoundedRectangle(context, x, y, width, height, roundedSize, rotationAngleDegrees);
   }
+}
+
+void MyArea::drawEllipse(const Cairo::RefPtr<Cairo::Context> &context, int x, int y, int width, int heigth, 
+                         double rotationAngleDegrees)
+{
+  double xScale = width / 2;
+  double yScale = heigth / 2;
+  double xCenterElipse = 1;
+  double yCenterElipse = 1;
+  double radiusElipse = 1.0;
+  double initAngleElipse = 0.0;
+  double endAngleElipse = 2 * M_PI;
+  double rotationAngleRadians = rotationAngleDegrees * M_PI / 180;
+
+  Cairo::Matrix matrix;
+  context->get_matrix(matrix);
+
+  context->translate(x, y);
+  context->rotate(rotationAngleRadians);
+  context->scale(xScale, yScale);
+  context->arc(xCenterElipse, yCenterElipse, radiusElipse, initAngleElipse, endAngleElipse);
+
+  context->set_matrix(matrix);
+  context->stroke();
 }
 
 void MyArea::drawSimpleRectangle(const Cairo::RefPtr<Cairo::Context> &context, int x, int y, int width, 
@@ -203,8 +234,8 @@ void MyArea::drawRoundedRectangle(const Cairo::RefPtr<Cairo::Context> &context, 
   context->restore();
 }
 
-void MyArea::drawEllipse(const Cairo::RefPtr<Cairo::Context> &context, int xCenter, int yCenter, int width,
-                         int heigth, double rotationAngleDegrees)
+void MyArea::drawEllipseCentered(const Cairo::RefPtr<Cairo::Context> &context, int xCenter, int yCenter, 
+                                 int width, int heigth, double rotationAngleDegrees)
 {
   double xScale = width / 2;
   double yScale = heigth / 2;
